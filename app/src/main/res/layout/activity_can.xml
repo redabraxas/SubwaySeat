@@ -8,4 +8,96 @@
 
 
 
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/horizontalScrollView" >
+
+        <LinearLayout
+            android:background="@drawable/can_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="left"
+                android:id="@+id/linearLayout_left">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right"
+                android:id="@+id/linearLayout_right">
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>>
+
+
+
+    <ImageView
+        android:layout_width="70dip"
+        android:layout_height="50dip"
+        android:id="@+id/btn_allowTOP"
+        android:src="@drawable/up"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="70dip"
+        android:layout_height="50dip"
+        android:id="@+id/btn_allowBOTTOM"
+        android:src="@drawable/down"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/txt_trainXY"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서있음"
+        android:id="@+id/btnStand"
+        android:tag="-1"
+        android:layout_above="@+id/txt_trainXY"
+        android:layout_centerHorizontal="true"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람"
+        android:id="@+id/btnAlarm"
+        android:tag="-1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/horizontalScrollView"
+        android:layout_alignEnd="@+id/horizontalScrollView" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="커뮤니티"
+        android:id="@+id/btnChat"
+        android:tag="-1"
+        android:layout_toLeftOf="@id/btnAlarm"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

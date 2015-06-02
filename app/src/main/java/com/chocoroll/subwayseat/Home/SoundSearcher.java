@@ -1,4 +1,4 @@
-package com.chocoroll.subwayseat;
+package com.chocoroll.subwayseat.Home;
 
 public class SoundSearcher {
 	private static final char HANGUL_BEGIN_UNICODE = 44032; // �� 

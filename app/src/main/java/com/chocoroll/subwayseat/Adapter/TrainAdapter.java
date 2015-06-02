@@ -9,14 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.chocoroll.subwayseat.Model.Station;
 import com.chocoroll.subwayseat.Model.Train;
 import com.chocoroll.subwayseat.R;
-import com.chocoroll.subwayseat.SoundSearcher;
 
 import java.util.ArrayList;
 

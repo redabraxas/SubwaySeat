@@ -13,17 +13,15 @@ import retrofit.http.POST;
 public interface Retrofit {
     public static final String ROOT = "http://myseat.dothome.co.kr";
 
-    @POST("/getStampList.php")
-    public void getStampList(@Body JsonObject info, Callback<JsonArray> callback);
+    @POST("/getMyLastSeat.php") // 내 자리정보를 가져옴
+    public void getMyLastSeat(@Body JsonObject info, Callback<JsonObject> callback);
 
-    @POST("/getStamp.php")
-    public void getStamp(@Body JsonObject info, Callback<String> callback);
-    @POST("/checkStamp.php")
-    public void checkStamp(@Body JsonObject info, Callback<String> callback);
+    @POST("/getSubwaySeat.php") // 칸의 자리정보를 가져옴
+    public void getSubwaySeat(@Body JsonObject info, Callback<JsonArray> callback);
 
-    @POST("/getGuestBook.php")
-    public void getGuestBook(@Body JsonObject info, Callback<JsonArray> callback);
-    @POST("/sendGuestBook.php")
-    public void sendGuestBook(@Body JsonObject info, Callback<String> callback);
+    @POST("/addSeat.php")   // 자리 추가
+    public void addSeat(@Body JsonObject info, Callback<JsonObject> callback);
+    @POST("/delSeat.php")    //자리 삭제
+    public void delSeat(@Body JsonObject info, Callback<String> callback);
 
 }

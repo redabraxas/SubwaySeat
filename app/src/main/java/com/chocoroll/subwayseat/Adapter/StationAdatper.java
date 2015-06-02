@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.chocoroll.subwayseat.Model.Station;
 import com.chocoroll.subwayseat.R;
-import com.chocoroll.subwayseat.SoundSearcher;
+import com.chocoroll.subwayseat.Home.SoundSearcher;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.chocoroll.subwayseat.Adapter.TrainAdapter;
-import com.chocoroll.subwayseat.MainActivity;
+import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.Model.Station;
 import com.chocoroll.subwayseat.Model.Train;
 import com.chocoroll.subwayseat.R;
@@ -50,6 +50,7 @@ public class TrainNumDialog extends Dialog{
 
     Context mContext;
 
+
     public TrainNumDialog(Context context, Station station) {
         super(context);
         mContext = context;
@@ -78,7 +79,7 @@ public class TrainNumDialog extends Dialog{
                 // TODO 아이템 클릭시에 구현할 내용은 여기에.
 
                 Train train = (Train) parent.getAdapter().getItem(position);
-                ((MainActivity)MainActivity.mContext).userInfo.setTrainNum(train.getTrainNum());
+                GlobalClass.trainNum = train.getTrainNum();
                 dismiss();
                 TrainXyDialog dialog = new TrainXyDialog(mContext);
                 dialog.show();
@@ -94,7 +95,7 @@ public class TrainNumDialog extends Dialog{
                 // TODO 아이템 클릭시에 구현할 내용은 여기에.
 
                 Train train = (Train) parent.getAdapter().getItem(position);
-                ((MainActivity)MainActivity.mContext).userInfo.setTrainNum(train.getTrainNum());
+                GlobalClass.trainNum = train.getTrainNum();
                 dismiss();
                 TrainXyDialog dialog = new TrainXyDialog(mContext);
                 dialog.show();

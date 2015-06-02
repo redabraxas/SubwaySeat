@@ -2,27 +2,18 @@ package com.chocoroll.subwayseat.TrainInfo;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.chocoroll.subwayseat.Adapter.TrainAdapter;
 import com.chocoroll.subwayseat.Can.CanActivity;
-import com.chocoroll.subwayseat.MainActivity;
-import com.chocoroll.subwayseat.Model.Station;
-import com.chocoroll.subwayseat.Model.Train;
+import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.R;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by RA on 2015-05-29.
@@ -30,7 +21,6 @@ import java.util.Calendar;
 public class TrainXyDialog  extends Dialog {
 
     Context mContext;
-
     int trainXY = 1;       // 승차위치
 
     public TrainXyDialog(Context context) {
@@ -84,13 +74,12 @@ public class TrainXyDialog  extends Dialog {
         ((Button) findViewById(R.id.btnOK)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)MainActivity.mContext).userInfo.setTrainXY(trainXY);
+                GlobalClass.trainXY =trainXY;
 
                 // 정보 확인
-                MainActivity.UserInfo userInfo =  ((MainActivity)MainActivity.mContext).getUserInfo();
 
                 new AlertDialog.Builder(mContext).setTitle("정보를 확인해주세요.")        // 제목 설정
-                        .setMessage("출발역: "+userInfo.getStartS().getName()+"\n도착역 :"+userInfo.getEndS().getName()+"\n칸: "+userInfo.getTrainXY())        // 메세지 설정
+                        .setMessage("출발역: "+GlobalClass.startS.getName()+"\n도착역 :"+GlobalClass.endS.getName()+"\n칸: "+GlobalClass.trainXY)        // 메세지 설정
                         .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             // 확인 버튼 클릭시 설정
@@ -109,7 +98,7 @@ public class TrainXyDialog  extends Dialog {
         ((Button) findViewById(R.id.btnNO)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TrainNumDialog dialog = new TrainNumDialog(mContext,   ((MainActivity)MainActivity.mContext).userInfo.getStartS());
+                TrainNumDialog dialog = new TrainNumDialog(mContext,  GlobalClass.startS);
                 dialog.show();
                 dismiss();
             }
