@@ -11,16 +11,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.R;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -32,7 +44,8 @@ public class AlarmActivity extends Activity {
     ImageView imgV;
     TextView alarmStationTv, rest, restTime, arriveTime;
     static int m_alarmType=0;
-    int hour, min;
+    int hour=0, min=0;
+    GetTrainInfoTask getTrainInfoTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +53,16 @@ public class AlarmActivity extends Activity {
         setContentView(R.layout.activity_alarm);
 
         TextView stationTv = (TextView)findViewById(R.id.arrStation);
+        stationTv.setText(GlobalClass.endS.getName());
+
+        imgV = (ImageView)findViewById(R.id.bell);
         stationTv.setText("GlobalClass.endS.getName()");
 
         imgV = (ImageView)findViewById(R.id.bell);
-        alarmStationTv = (TextView)findViewById(R.id.alarmStation);
         rest = (TextView)findViewById(R.id.rest);
         restTime = (TextView)findViewById(R.id.restTime);
+        alarmStationTv = (TextView)findViewById(R.id.alarmStation);
+        alarmStationTv.setText(GlobalClass.endS.getName() + " 역");
 
         //nowTime =
         Button btn_play = (Button) findViewById(R.id.btn_play);
@@ -73,7 +90,7 @@ public class AlarmActivity extends Activity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=1007000728&estatn_id=1007000726";
+                String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=100"+GlobalClass.startS.getLine()+"000"+GlobalClass.startS.getCode()+"&estatn_id=100+"+GlobalClass.endS.getLine()+"000"+GlobalClass.endS.getCode();
                 new Load_Rest_Time().execute(url);
             }
         };
@@ -183,5 +200,105 @@ public class AlarmActivity extends Activity {
                 if(m_alarmType == 4)    m_alarmType = 0;
                 break;
             }
+    }
+
+    public class GetTrainInfoTask extends AsyncTask<Void, Void, Boolean> {
+        JSONArray trainArray;
+        private final String urlPath;
+
+        GetTrainInfoTask(String stationCode, String lineCode) {
+            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100" + lineCode + "000" + stationCode + "&subwayId=100+" + lineCode;
+
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+            DefaultHttpClient client = new DefaultHttpClient();
+
+            // 객체 연결 설정 부분, 연결 최대시간 등등
+            HttpParams param = client.getParams();
+            HttpConnectionParams.setConnectionTimeout(param, 5000);
+            HttpConnectionParams.setSoTimeout(param, 5000);
+
+            try {
+                InputStream contentStream = null;
+                try {
+                    // HttpClient 를 사용해서 주어진 URL에 대한 입력 스트림을 얻는다.
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpResponse response = httpclient.execute(new HttpGet(urlPath));
+                    contentStream = response.getEntity().getContent();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // 입력스트림을 "UTF-8" 를 사용해서 읽은 후, 라인 단위로 데이터를 읽을 수 있는 BufferedReader 를 생성한다.
+                BufferedReader br = new BufferedReader(new InputStreamReader(contentStream, "EUC-KR"));
+
+                // 읽은 데이터를 저장한 StringBuffer 를 생성한다.
+                StringBuffer sb = new StringBuffer();
+
+                try {
+                    // 라인 단위로 읽은 데이터를 임시 저장한 문자열 변수 line
+                    String line = null;
+
+                    // 라인 단위로 데이터를 읽어서 StringBuffer 에 저장한다.
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String str = sb.toString();
+
+                // 원격에서 읽어온 데이터로 JSON 객체 생성
+                JSONObject object = new JSONObject(str);
+
+                trainArray = new JSONArray(object.getString("resultList"));
+                return true;
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success)
+                try {
+                    temp(trainArray);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+        }
+
+        @Override
+        protected void onCancelled() {
+            getTrainInfoTask = null;
+        }
+    }
+
+    void temp(JSONArray jsonArray) throws JSONException {
+        getTrainInfoTask = null;
+
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject insideObject = jsonArray.getJSONObject(i);
+
+                String num = insideObject.getString("bTrainNo");  // 열차 번호
+                String time = insideObject.getString("arvlMsg2"); // 도착시간
+                String dst = insideObject.getString("trainLineNm"); // 행선지
+
+
+                // 비교
+
+            }
+        }
     }
 }

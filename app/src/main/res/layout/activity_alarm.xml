@@ -60,7 +60,7 @@
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/alarmStation"
-            android:text="뚝섬유원지 역"
+            android:text="건대입구 역"
             android:textSize="25dp"
             android:textStyle="bold"
             android:layout_width="0dp"
@@ -76,6 +76,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/arriveInfo"
+            android:text="도착역 근처 진입 전.."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

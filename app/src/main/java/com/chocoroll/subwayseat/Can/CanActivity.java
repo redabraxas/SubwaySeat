@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,7 +86,7 @@ public class CanActivity extends Activity {
 
         });
 
-        ((Button)findViewById(R.id.btnStand)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.btnStand)).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -96,7 +98,7 @@ public class CanActivity extends Activity {
         });
 
         // 알람, 커뮤니티
-        ((Button)findViewById(R.id.btnAlarm)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.btnAlarm)).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -107,7 +109,7 @@ public class CanActivity extends Activity {
 
         });
 
-        ((Button)findViewById(R.id.btnChat)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.btnChat)).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -426,7 +428,13 @@ public class CanActivity extends Activity {
         final JsonObject info = new JsonObject();
         info.addProperty("trainNum", GlobalClass.trainNum);
         info.addProperty("trainCan", GlobalClass.trainXY);
-        info.addProperty("trainSeat", String.valueOf(tempBtn.getId()));
+
+        if(tempBtn.getId() == R.id.btnStand){
+            info.addProperty("trainSeat", 1000);
+        }else{
+            info.addProperty("trainSeat", String.valueOf(tempBtn.getId()));
+        }
+
         info.addProperty("phoneID", GlobalClass.phoneID);
         info.addProperty("dst", GlobalClass.endS.getName());
 
