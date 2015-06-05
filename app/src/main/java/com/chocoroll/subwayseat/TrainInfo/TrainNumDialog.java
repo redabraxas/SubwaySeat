@@ -107,7 +107,7 @@ public class TrainNumDialog extends Dialog{
         private final String urlPath;
 
         GetTrainInfoTask(String stationCode, String lineCode) {
-            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100"+lineCode+"00"+stationCode+"&subwayId=100"+lineCode;
+            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100"+lineCode+"000"+stationCode+"&subwayId=100"+lineCode;
             // urlPath="http://openapi.seoul.go.kr:8088/sample/json/SearchArrivalInfoByFRCodeService/1/2/"+stationCode+"/"+direction+"/"+day+"/";
 
             //urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=+"+lineCode+"000212&subwayId=1002";
