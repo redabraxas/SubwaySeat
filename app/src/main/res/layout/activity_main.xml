@@ -10,7 +10,7 @@
         android:id="@+id/menu_view"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#ff1ca835">
+        android:background="#ffdd9ab2">
         <ImageView
             android:id="@+id/left_menu"
             android:layout_gravity="center"
@@ -42,6 +42,7 @@
 
 
     <LinearLayout
+        android:gravity="center"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

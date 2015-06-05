@@ -43,9 +43,11 @@ public class TrainAdapter extends ArrayAdapter<Train>  {
 
             TextView trainNum = (TextView) v.findViewById(R.id.trainNum);
             TextView arriveTime = (TextView) v.findViewById(R.id.arriveTime);
+            TextView destination = (TextView) v.findViewById(R.id.destination);
 
             trainNum.setText(p.getTrainNum());
             arriveTime.setText(p.getArriveTime());
+            destination.setText(p.getDst());
 
 
         }
