@@ -23,6 +23,12 @@
 
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#ffc5c1c7">
+
+            </LinearLayout>
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,9 +54,11 @@
 
 
             <TextView
+
+
                 android:clickable="true"
                 android:gravity="center"
-                android:textColor="#7C7C7C"
+                android:textColor="#ffff7776"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

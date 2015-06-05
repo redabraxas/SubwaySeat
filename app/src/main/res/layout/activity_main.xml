@@ -10,7 +10,7 @@
         android:id="@+id/menu_view"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#99ff002d">
+        android:background="@color/main_color">
         <ImageView
             android:id="@+id/left_menu"
             android:layout_gravity="center"

@@ -54,7 +54,7 @@ public class RelpyDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_answer);
+        setContentView(R.layout.dialog_reply);
 
 
         m_ListView=(ListView) findViewById(R.id.listViewReply);
