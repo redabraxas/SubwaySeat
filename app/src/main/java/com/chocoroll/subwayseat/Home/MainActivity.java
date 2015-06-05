@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,9 +18,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.chocoroll.subwayseat.Adapter.StationAdatper;
 import com.chocoroll.subwayseat.Can.AlarmActivity;
+import com.chocoroll.subwayseat.Can.CanActivity;
 import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.Model.Station;
 import com.chocoroll.subwayseat.R;
@@ -40,17 +43,28 @@ import retrofit.client.Response;
 
 
 public class MainActivity extends Activity {
-
     ArrayList<Station> stationList = new ArrayList<>();
+
+
+    ArrayList<Station> stationList1 = new ArrayList<>();
+    ArrayList<Station> stationList2 = new ArrayList<>();
+    ArrayList<Station> stationList3 = new ArrayList<>();
+    ArrayList<Station> stationList4 = new ArrayList<>();
+    ArrayList<Station> stationList5 = new ArrayList<>();
+    ArrayList<Station> stationList6 = new ArrayList<>();
+    ArrayList<Station> stationList7 = new ArrayList<>();
+
     public static Context mContext;
 
     EditText editTextSearch;
 
     ListView listViewSearch;
     StationAdatper mAdatper;
+    StationAdatper mSubAdatper;
     LinearLayout searchBox, mainBox;
 
     boolean flag;
+    boolean backFlag = false;
 
 
 
@@ -71,6 +85,12 @@ public class MainActivity extends Activity {
         getSubwayStation();
 
 
+        TelephonyManager telephony = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String phoneID = telephony.getDeviceId();    //device id
+        GlobalClass.phoneID = phoneID;
+
+
+
         searchBox = (LinearLayout) findViewById(R.id.searchBox);
         mainBox = (LinearLayout) findViewById(R.id.mainBox);
 
@@ -78,13 +98,12 @@ public class MainActivity extends Activity {
         editTextSearch = (EditText) findViewById(R.id.editTextSearch);
         editTextSearch.addTextChangedListener(filterTextWatcher);
 
-
         listViewSearch = (ListView) findViewById(R.id.listViewSearch);
 
         mAdatper = new StationAdatper(mContext, R.layout.model_station, stationList);
+        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList);
 
 
-        listViewSearch.setAdapter(mAdatper);
 
         listViewSearch.setOnItemClickListener(onClickListItem);
         searchBox.setVisibility(View.GONE);
@@ -116,7 +135,13 @@ public class MainActivity extends Activity {
         public void onTextChanged(CharSequence s, int start, int before,
                                   int count) {
 
-                mAdatper.getFilter().filter(s);
+
+
+                if(flag){
+                    mAdatper.getFilter().filter(s);
+                }else{
+                    mSubAdatper.getFilter().filter(s);
+                }
 
         }
 
@@ -133,6 +158,8 @@ public class MainActivity extends Activity {
                 ((EditText)findViewById(R.id.editStartStation)).setText(station.getName());
                 editTextSearch.setText("");
                 GlobalClass.startS = station;
+
+
             }else{
                 ((EditText)findViewById(R.id.editEndStation)).setText(station.getName());
                 editTextSearch.setText("");
@@ -164,15 +191,48 @@ public class MainActivity extends Activity {
 
         switch (view.getId()){
             case R.id.editStartStation:
+                listViewSearch.setAdapter(mAdatper);
                 searchBox.setVisibility(View.VISIBLE);
                 mainBox.setVisibility(View.GONE);
                 flag = true;
+                backFlag = true;
                 break;
             case R.id.editEndStation:
-                searchBox.setVisibility(View.VISIBLE);
-                mainBox.setVisibility(View.GONE);
-                flag = false;
-                break;
+
+                if(GlobalClass.startS != null){
+
+                    String line = GlobalClass.startS.getLine();
+
+                    if(line.equals("1")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList1);
+                    }else if(line.equals("2")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList2);
+                    }else if(line.equals("3")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList3);
+                    }else if(line.equals("4")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList4);
+                    }else if(line.equals("5")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList5);
+                    }else if(line.equals("6")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList6);
+                    }else if(line.equals("7")){
+                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList7);
+                    }
+
+                    listViewSearch.setAdapter(mSubAdatper);
+                    searchBox.setVisibility(View.VISIBLE);
+                    mainBox.setVisibility(View.GONE);
+                    flag = false;
+                    backFlag= true;
+                    break;
+
+                }else{
+
+                    Toast.makeText(MainActivity.this, "출발역 먼저 선택해주세요!", Toast.LENGTH_SHORT).show();
+                }
+
+
+
             case R.id.btnOK:
                 if(GlobalClass.startS != null && GlobalClass.endS != null){
                     TrainNumDialog dialog = new TrainNumDialog(MainActivity.this, GlobalClass.startS);
@@ -222,9 +282,32 @@ public class MainActivity extends Activity {
                 double posy = json.getDouble("YPOINT");
 
                 stationList.add(new Station(name, code, line, posx, posy));
+                if(line.equals("1")){
+                    stationList1.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList1);
+                }else if(line.equals("2")){
+                    stationList2.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList2);
+                }else if(line.equals("3")){
+                    stationList3.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList3);
+                }else if(line.equals("4")){
+                    stationList4.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList4);
+                }else if(line.equals("5")){
+                    stationList5.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList5);
+                }else if(line.equals("6")){
+                    stationList6.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList6);
+                }else if(line.equals("7")){
+                    stationList7.add(new Station(name, code, line, posx, posy));
+                    GlobalClass.stationList.addAll(stationList7);
+                }
+
             }
         } catch (Exception e) {
-            Log.e("result",e.getCause().toString());
+            e.printStackTrace();
         }
 
 
@@ -245,7 +328,7 @@ public class MainActivity extends Activity {
 
 
         final JsonObject info = new JsonObject();
-        info.addProperty("phoneID", GlobalClass.trainNum);
+        info.addProperty("phoneID", GlobalClass.phoneID);
 
 
         new Thread(new Runnable() {
@@ -270,7 +353,7 @@ public class MainActivity extends Activity {
                             if (result.equals("success")) {
 
                                 GlobalClass.trainNum = (jsonObject.get("trainNum")).getAsString();
-                                GlobalClass.trainXY = (jsonObject.get("trainXY")).getAsInt();
+                                GlobalClass.trainXY = (jsonObject.get("trainCan")).getAsInt();
                                 GlobalClass.trainSeat = (jsonObject.get("trainSeat")).getAsInt();
 
                                 SharedPreferences setting = getSharedPreferences("station", MODE_PRIVATE);
@@ -280,6 +363,9 @@ public class MainActivity extends Activity {
                                 double mapx = setting.getFloat("mapx", 0);
                                 double mapy = setting.getFloat("mpay", 0);
                                 GlobalClass.endS = new Station(name, code, line, mapx, mapy);
+
+                                Intent intent =new Intent(MainActivity.this, CanActivity.class);
+                                startActivity(intent);
 
 
                             } else if (result.equals("not_found")) {
@@ -333,6 +419,19 @@ public class MainActivity extends Activity {
 
     }
 
+
+
+    @Override
+    public void onBackPressed(){
+
+        if(backFlag){
+            searchBox.setVisibility(View.GONE);
+            mainBox.setVisibility(View.VISIBLE);
+        }else{
+            super.onBackPressed();
+        }
+
+    }
 
 
 

@@ -24,4 +24,14 @@ public interface Retrofit {
     @POST("/delSeat.php")    //자리 삭제
     public void delSeat(@Body JsonObject info, Callback<String> callback);
 
+    // 질문,답변
+    @POST("/getPostList.php")
+    public void getPostList(@Body JsonObject info, Callback<JsonArray> callback);
+    @POST("/sendPost.php")
+    public void sendPost(@Body JsonObject info, Callback<String> callback);
+    @POST("/getReplyList.php")
+    public void getReplyList(@Body JsonObject info, Callback<JsonArray> callback);
+    @POST("/sendReply.php")
+    public void sendReply(@Body JsonObject info, Callback<String> callback);
+
 }

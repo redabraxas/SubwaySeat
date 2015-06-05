@@ -89,7 +89,7 @@ public class CanActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                // 서있는건 태그값이 -1
+                // 서있는건 태그값이 1000
                 addSeat((Button)view);
             }
 
@@ -112,8 +112,8 @@ public class CanActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                // 서있는건 태그값이 -1
-                addSeat((Button)view);
+                Intent intent = new Intent(CanActivity.this, PostActivity.class);
+                startActivity(intent);
             }
 
         });
@@ -121,9 +121,7 @@ public class CanActivity extends Activity {
 
 
 
-        //getSubwaySeat();
-        setSeatView();
-
+        getSubwaySeat();
     }
 
 
@@ -212,13 +210,24 @@ public class CanActivity extends Activity {
         for(int i=0; i<seatList.size(); i++){
 
             // 내가 앉은 자리가 있따면,
-            if(GlobalClass.phoneID.equals(seatList.get(i).id)){
+            if(GlobalClass.phoneID.equals(seatList.get(i).phoneID)){
                 GlobalClass.trainSeat = seatList.get(i).seat;
-                btn[seatList.get(i).seat].setBackground(getResources().getDrawable(R.drawable.can_seat_me));
+
+                if(GlobalClass.trainSeat == 1000){
+                    Toast.makeText(CanActivity.this, "현재 서있습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    btn[seatList.get(i).seat].setBackground(getResources().getDrawable(R.drawable.can_seat_me));
+                }
+
             }
 
-            btn[seatList.get(i).seat].setText(seatList.get(i).dst);
-            btn[seatList.get(i).seat].setTag(seatList.get(i).id);
+            if(GlobalClass.trainSeat == 1000){
+            }else{
+                btn[seatList.get(i).seat].setText(seatList.get(i).dst);
+                btn[seatList.get(i).seat].setTag(seatList.get(i).phoneID);
+            }
+
+
 
         }
 
@@ -327,6 +336,8 @@ public class CanActivity extends Activity {
 
     void getSubwaySeat(){
 
+        seatList.clear();
+
         final ProgressDialog dialog = new ProgressDialog(CanActivity.this);
         dialog.setMessage("자리정보를 받아오는 중입니다...");
         dialog.setIndeterminate(true);
@@ -336,7 +347,7 @@ public class CanActivity extends Activity {
 
         final JsonObject info = new JsonObject();
         info.addProperty("trainNum", GlobalClass.trainNum);
-        info.addProperty("trainXY", GlobalClass.trainXY);
+        info.addProperty("trainCan", GlobalClass.trainXY);
 
         new Thread(new Runnable() {
             public void run() {
@@ -355,12 +366,12 @@ public class CanActivity extends Activity {
 
                             for (int i = 0; i < jsonElements.size(); i++) {
                                 JsonObject deal = (JsonObject) jsonElements.get(i);
-                                String user_id = (deal.get("user_id")).getAsString();
-                                int subwaySit = (deal.get("subwaySit")).getAsInt();
-                                String destination = (deal.get("destination")).getAsString();
+                                String phoneID = (deal.get("phoneID")).getAsString();
+                                int subwaySit = (deal.get("seatNum")).getAsInt();
+                                String destination = (deal.get("dst")).getAsString();
 
                                 // 시트 추가
-                                seatList.add( new Seat(user_id, subwaySit, destination));
+                                seatList.add( new Seat(phoneID, subwaySit, destination));
                             }
 
 
@@ -414,9 +425,9 @@ public class CanActivity extends Activity {
 
         final JsonObject info = new JsonObject();
         info.addProperty("trainNum", GlobalClass.trainNum);
-        info.addProperty("trainXY", GlobalClass.trainXY);
-        info.addProperty("seat", String.valueOf(tempBtn.getTag()));
-        info.addProperty("id", GlobalClass.phoneID);
+        info.addProperty("trainCan", GlobalClass.trainXY);
+        info.addProperty("trainSeat", String.valueOf(tempBtn.getId()));
+        info.addProperty("phoneID", GlobalClass.phoneID);
         info.addProperty("dst", GlobalClass.endS.getName());
 
 
@@ -499,9 +510,13 @@ public class CanActivity extends Activity {
                                     // 이전 자리의 번호
                                     int preSeat = (jsonObject.get("preSeat")).getAsInt();
 
-                                    btn[preSeat].setBackground(getResources().getDrawable(R.drawable.can_seat));
-                                    btn[preSeat].setText("");
-                                    btn[preSeat].setTag(null);
+                                    if(preSeat != 1000){
+                                        btn[preSeat].setBackground(getResources().getDrawable(R.drawable.can_seat));
+                                        btn[preSeat].setText("");
+                                        btn[preSeat].setTag(null);
+                                    }
+
+
 
 
                                 }
@@ -572,9 +587,7 @@ public class CanActivity extends Activity {
 
 
         final JsonObject info = new JsonObject();
-        info.addProperty("trainNum", GlobalClass.trainNum);
-        info.addProperty("trainXY", GlobalClass.trainXY);
-        info.addProperty("seat", String.valueOf(tempBtn.getTag()));
+        info.addProperty("phoneID", GlobalClass.phoneID);
 
         new Thread(new Runnable() {
             public void run() {

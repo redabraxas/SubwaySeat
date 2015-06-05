@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:text="서있음"
         android:id="@+id/btnStand"
-        android:tag="-1"
+        android:tag="1000"
         android:layout_above="@+id/txt_trainXY"
         android:layout_centerHorizontal="true"/>
 
@@ -86,7 +86,6 @@
         android:layout_height="wrap_content"
         android:text="알람"
         android:id="@+id/btnAlarm"
-        android:tag="-1"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/horizontalScrollView"
         android:layout_alignEnd="@+id/horizontalScrollView" />
@@ -97,7 +96,6 @@
         android:layout_height="wrap_content"
         android:text="커뮤니티"
         android:id="@+id/btnChat"
-        android:tag="-1"
         android:layout_toLeftOf="@id/btnAlarm"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>
