@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
     ArrayList<Station> stationList5 = new ArrayList<>();
     ArrayList<Station> stationList6 = new ArrayList<>();
     ArrayList<Station> stationList7 = new ArrayList<>();
+    ArrayList<Station> stationList8 = new ArrayList<>();
+    ArrayList<Station> stationList9 = new ArrayList<>();
 
     public static Context mContext;
 
@@ -214,6 +216,10 @@ public class MainActivity extends Activity {
                         mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList6);
                     }else if(line.equals("7")){
                         mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList7);
+                    }else if(line.equals("8")){
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList8);
+                    }else if(line.equals("9")){
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList9);
                     }
 
                     listViewSearch.setAdapter(mSubAdapter);
@@ -291,6 +297,10 @@ public class MainActivity extends Activity {
                     stationList6.add(new Station(name, code, line, posx, posy));
                 }else if(line.equals("7")){
                     stationList7.add(new Station(name, code, line, posx, posy));
+                }else if(line.equals("8")){
+                    stationList8.add(new Station(name, code, line, posx, posy));
+                }else if(line.equals("9")){
+                    stationList9.add(new Station(name, code, line, posx, posy));
                 }
             }
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -78,19 +79,31 @@ public class TrainXyDialog  extends Dialog {
 
                 // 정보 확인
 
-                new AlertDialog.Builder(mContext).setTitle("정보를 확인해주세요.")        // 제목 설정
-                        .setMessage("출발역: "+GlobalClass.startS.getName()+"\n도착역 :"+GlobalClass.endS.getName()+"\n칸: "+GlobalClass.trainXY)        // 메세지 설정
-                        .setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            // 확인 버튼 클릭시 설정
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dismiss();
+                LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+                final View layout = inflate.inflate(R.layout.dialog_sure, null);
+
+                ((TextView) layout.findViewById(R.id.can)).setText(GlobalClass.startS.getName());
+                ((TextView) layout.findViewById(R.id.can)).setText(GlobalClass.endS.getName());
+                ((TextView) layout.findViewById(R.id.can)).setText(String.valueOf(GlobalClass.trainXY));
 
 
-                                Intent intent = new Intent(mContext, CanActivity.class);
-                                mContext.startActivity(intent);
-                            }
-                        }).create().show();
+                new AlertDialog.Builder(mContext).setView(layout).setTitle("정보를 확인해주세요!")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(mContext, CanActivity.class);
+                                        mContext.startActivity(intent);
+                                         }
+                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+
+
 
             }
         });
