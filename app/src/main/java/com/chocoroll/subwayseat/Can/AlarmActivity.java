@@ -42,7 +42,7 @@ import java.util.TimerTask;
 
 public class AlarmActivity extends Activity {
     ImageView imgV;
-    TextView alarmStationTv, rest, restTime, arriveTime;
+    TextView alarmStationTv, rest, restTime, arriveTime, arriveInfo;
     static int m_alarmType=0;
     int hour=0, min=0;
     GetTrainInfoTask getTrainInfoTask;
@@ -56,13 +56,14 @@ public class AlarmActivity extends Activity {
         stationTv.setText(GlobalClass.endS.getName());
 
         imgV = (ImageView)findViewById(R.id.bell);
-        stationTv.setText("GlobalClass.endS.getName()");
+        stationTv.setText(GlobalClass.endS.getName());
 
         imgV = (ImageView)findViewById(R.id.bell);
         rest = (TextView)findViewById(R.id.rest);
         restTime = (TextView)findViewById(R.id.restTime);
         alarmStationTv = (TextView)findViewById(R.id.alarmStation);
         alarmStationTv.setText(GlobalClass.endS.getName() + " 역");
+        arriveInfo = (TextView)findViewById(R.id.arriveInfo);
 
         //nowTime =
         Button btn_play = (Button) findViewById(R.id.btn_play);
@@ -90,8 +91,14 @@ public class AlarmActivity extends Activity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=100"+GlobalClass.startS.getLine()+"000"+GlobalClass.startS.getCode()+"&estatn_id=100+"+GlobalClass.endS.getLine()+"000"+GlobalClass.endS.getCode();
+                // 도착역까지 남은 시간 및 남은 정거장 수 가져옴
+                String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=100"+GlobalClass.startS.getLine()+"000"+GlobalClass.startS.getCode()+"&estatn_id=100"+GlobalClass.endS.getLine()+"000"+GlobalClass.endS.getCode();
+                Log.d("boha3", url);
                 new Load_Rest_Time().execute(url);
+
+                // 현재 실시간 열차 도착 정보를 알아온다.
+                getTrainInfoTask = new GetTrainInfoTask(GlobalClass.endS.getCode(), GlobalClass.endS.getLine());
+                getTrainInfoTask.execute((Void) null);
             }
         };
         Timer timer = new Timer();
@@ -103,7 +110,6 @@ public class AlarmActivity extends Activity {
     {
         protected String doInBackground(String... urls) {
             try {
-                Log.d("boha1", urls[0]);
                 return (String) downloadUrl((String) urls[0]);
             } catch (IOException e) {
                 return "다운로드 실패";
@@ -112,7 +118,6 @@ public class AlarmActivity extends Activity {
         private String downloadUrl(String myurl) throws IOException {
             HttpURLConnection conn = null;
             try {
-                Log.d("boha2", myurl);
                 URL url = new URL(myurl);   // 입력된 url
                 conn = (HttpURLConnection) url.openConnection(); // 리소스 연결
                 BufferedInputStream buf = new BufferedInputStream(conn.getInputStream());   // byte단위로 저장
@@ -122,7 +127,6 @@ public class AlarmActivity extends Activity {
                 while ((line = bufreader.readLine()) != null) {   // 문자를 줄단위로
                     page += line;
                 }
-                Log.d("boha3", page);
                 return page;
             } finally {
                 conn.disconnect();
@@ -183,7 +187,6 @@ public class AlarmActivity extends Activity {
 
             arriveTime = (TextView)findViewById(R.id.arriveTime);
             arriveTime.setText(hour + " : " + min);
-
         }
     }
 
@@ -207,8 +210,8 @@ public class AlarmActivity extends Activity {
         private final String urlPath;
 
         GetTrainInfoTask(String stationCode, String lineCode) {
-            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100" + lineCode + "000" + stationCode + "&subwayId=100+" + lineCode;
-
+            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100" + lineCode + "000" + stationCode + "&subwayId=100" + lineCode;
+            Log.d("boha2", urlPath);
         }
 
         @Override
@@ -293,11 +296,21 @@ public class AlarmActivity extends Activity {
 
                 String num = insideObject.getString("bTrainNo");  // 열차 번호
                 String time = insideObject.getString("arvlMsg2"); // 도착시간
-                String dst = insideObject.getString("trainLineNm"); // 행선지
+                String dst = insideObject.getString("trainLineNm"); // 행선지. 방면
+                Log.d("bohatime", time);
+
+                String[] str = time.split("\\(");
+                time = str[0];
+                str = str[1].split("\\)");
 
 
                 // 비교
-
+                if(num.equals(GlobalClass.trainNum))
+                {
+                    arriveInfo.setText("도착역 근처 입니다.\n");
+                    arriveInfo.append(time + " 입니다.\n");
+                    arriveInfo.append(str[0]);
+                }
             }
         }
     }

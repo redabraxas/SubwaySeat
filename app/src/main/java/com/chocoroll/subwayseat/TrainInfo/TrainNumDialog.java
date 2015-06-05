@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,7 +32,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by RA on 2015-05-29.
@@ -108,6 +108,7 @@ public class TrainNumDialog extends Dialog{
 
         GetTrainInfoTask(String stationCode, String lineCode) {
             urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100"+lineCode+"000"+stationCode+"&subwayId=100"+lineCode;
+            Log.d("boha", urlPath);
             // urlPath="http://openapi.seoul.go.kr:8088/sample/json/SearchArrivalInfoByFRCodeService/1/2/"+stationCode+"/"+direction+"/"+day+"/";
 
             //urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=+"+lineCode+"000212&subwayId=1002";
@@ -166,10 +167,6 @@ public class TrainNumDialog extends Dialog{
 
                 // "row" 배열로 구성 되어있으므로 JSON 배열생성
                 //trainArray = new JSONArray(object2.getString("row"));
-
-
-
-
                 return true;
 
             } catch (UnsupportedEncodingException e) {
@@ -207,7 +204,6 @@ public class TrainNumDialog extends Dialog{
     void setTrainInfo(JSONArray trainArray) throws JSONException {
 
         getTrainInfoTask = null;
-
         if (trainArray != null) {
             for (int i = 0; i < trainArray.length(); i++) {
 
