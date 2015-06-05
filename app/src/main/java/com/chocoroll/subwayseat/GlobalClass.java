@@ -22,8 +22,6 @@ public class GlobalClass extends Application {
 
     public static boolean seatflag = false;     // 자리 입력 했는지 안했는지
 
-    // 호선 리스트
-    public static ArrayList<Station> stationList = new ArrayList<Station>();
 
 
     @Override

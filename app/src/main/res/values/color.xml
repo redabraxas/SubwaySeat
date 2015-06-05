@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="seat">#ffb9bab9</color>
+    <color name="seat_me">#ffff2d3e</color>
+    <color name="background">#ffffff</color>
+
+
+</resources>

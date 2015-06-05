@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by RA on 2015-05-27.
  */
-public class StationAdatper extends ArrayAdapter<Station>  implements Filterable {
+public class StationAdapter extends ArrayAdapter<Station>  implements Filterable {
 
 
     private ArrayList<Station> items;
@@ -27,7 +27,7 @@ public class StationAdatper extends ArrayAdapter<Station>  implements Filterable
     private Context context;
     private int textViewResourceId;
 
-    public StationAdatper(Context context, int textViewResourceId, ArrayList<Station> items) {
+    public StationAdapter(Context context, int textViewResourceId, ArrayList<Station> items) {
         super(context, textViewResourceId, items);
         this.items = new ArrayList<Station>();
         this.items.addAll(items);

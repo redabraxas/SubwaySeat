@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.chocoroll.subwayseat.Adapter.StationAdatper;
+import com.chocoroll.subwayseat.Adapter.StationAdapter;
 import com.chocoroll.subwayseat.Can.CanActivity;
 import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.Model.Station;
@@ -57,8 +57,8 @@ public class MainActivity extends Activity {
     EditText editTextSearch;
 
     ListView listViewSearch;
-    StationAdatper mAdatper;
-    StationAdatper mSubAdatper;
+    StationAdapter mAdapter;
+    StationAdapter mSubAdapter;
     LinearLayout searchBox, mainBox;
 
     boolean flag;
@@ -98,8 +98,8 @@ public class MainActivity extends Activity {
 
         listViewSearch = (ListView) findViewById(R.id.listViewSearch);
 
-        mAdatper = new StationAdatper(mContext, R.layout.model_station, stationList);
-        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList);
+        mAdapter = new StationAdapter(mContext, R.layout.model_station, stationList);
+        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList);
 
 
 
@@ -136,9 +136,9 @@ public class MainActivity extends Activity {
 
 
                 if(flag){
-                    mAdatper.getFilter().filter(s);
+                    mAdapter.getFilter().filter(s);
                 }else{
-                    mSubAdatper.getFilter().filter(s);
+                    mSubAdapter.getFilter().filter(s);
                 }
 
         }
@@ -149,16 +149,15 @@ public class MainActivity extends Activity {
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
 
-
-            Station station = stationList.get(arg2);
-
             if(flag){
+                Station station = (Station)mAdapter.getItem(arg2);
                 ((EditText)findViewById(R.id.editStartStation)).setText(station.getName());
                 editTextSearch.setText("");
                 GlobalClass.startS = station;
 
 
             }else{
+                Station station = (Station)mSubAdapter.getItem(arg2);
                 ((EditText)findViewById(R.id.editEndStation)).setText(station.getName());
                 editTextSearch.setText("");
                 GlobalClass.endS = station;
@@ -189,7 +188,7 @@ public class MainActivity extends Activity {
 
         switch (view.getId()){
             case R.id.editStartStation:
-                listViewSearch.setAdapter(mAdatper);
+                listViewSearch.setAdapter(mAdapter);
                 searchBox.setVisibility(View.VISIBLE);
                 mainBox.setVisibility(View.GONE);
                 flag = true;
@@ -202,29 +201,22 @@ public class MainActivity extends Activity {
                     String line = GlobalClass.startS.getLine();
 
                     if(line.equals("1")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList1);
-                        GlobalClass.stationList.addAll(stationList1);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList1);
                     }else if(line.equals("2")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList2);
-                        GlobalClass.stationList.addAll(stationList2);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList2);
                     }else if(line.equals("3")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList3);
-                        GlobalClass.stationList.addAll(stationList3);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList3);
                     }else if(line.equals("4")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList4);
-                        GlobalClass.stationList.addAll(stationList4);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList4);
                     }else if(line.equals("5")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList5);
-                        GlobalClass.stationList.addAll(stationList5);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList5);
                     }else if(line.equals("6")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList6);
-                        GlobalClass.stationList.addAll(stationList6);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList6);
                     }else if(line.equals("7")){
-                        mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList7);
-                        GlobalClass.stationList.addAll(stationList7);
+                        mSubAdapter = new StationAdapter(mContext, R.layout.model_station, stationList7);
                     }
 
-                    listViewSearch.setAdapter(mSubAdatper);
+                    listViewSearch.setAdapter(mSubAdapter);
                     searchBox.setVisibility(View.VISIBLE);
                     mainBox.setVisibility(View.GONE);
                     flag = false;

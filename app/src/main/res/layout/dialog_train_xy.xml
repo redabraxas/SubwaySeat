@@ -2,79 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <ImageView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/main_trainxy_desc"
-        android:scaleType="fitCenter" />
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center">
 
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="100dip"
-        android:layout_below="@+id/imageView"
-        android:gravity="center"
-        android:background="@drawable/main_trainxy_box"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="1"
-        android:gravity="center"
-        android:id="@+id/txt_trainxy"
-        android:textSize="40dip"
-        android:layout_marginLeft="30dip"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="번 칸"
-            android:gravity="center"
-            android:textSize="40dip"
-            android:layout_alignTop="@+id/txt_trainxy"
-            android:layout_centerHorizontal="true" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_weight="5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:gravity="center"
+                android:id="@+id/txt_trainxy"
+                android:textSize="40dip"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="번 칸"
+                android:gravity="center"
+                android:textSize="20dip" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="right"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
 
             <ImageView
                 android:layout_width="40dip"
                 android:layout_height="40dip"
                 android:scaleType="fitXY"
-                android:layout_marginRight="30dip"
                 android:src="@drawable/main_trainnum_up"
                 android:id="@+id/image_up" />
 
             <ImageView
                 android:layout_width="40dip"
-                android:layout_marginTop="10dip"
                 android:layout_height="40dip"
                 android:scaleType="fitXY"
-                android:layout_marginRight="30dip"
                 android:src="@drawable/main_trainnum_dawn"
                 android:id="@+id/image_down" />
         </LinearLayout>
 
 
-    </RelativeLayout>
+        </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ff717273"></LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -84,19 +78,25 @@
         android:layout_below="@+id/relativeLayout">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnOK"
+            android:background="@null"
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:onClick="btnXY"
+            android:textColor="#ff3200d1"
             android:text="확인" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="취소"
+            android:textColor="#ffff484a"
+            android:background="@null"
             android:id="@+id/btnNO"
             android:onClick="btnXY"
             android:layout_below="@+id/relativeLayout"

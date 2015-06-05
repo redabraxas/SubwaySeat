@@ -33,6 +33,7 @@ import retrofit.client.Response;
 public class CanActivity extends Activity {
 
     Button btn[] = new Button[42];
+    Button btnStand;
 
 
     // 한 칸의 자리 리스트
@@ -86,7 +87,8 @@ public class CanActivity extends Activity {
 
         });
 
-        (findViewById(R.id.btnStand)).setOnClickListener(new View.OnClickListener() {
+        btnStand =(Button) findViewById(R.id.btnStand);
+        btnStand.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -151,15 +153,15 @@ public class CanActivity extends Activity {
 
 
         // 구별 바
-        ImageView imageView = new ImageView(CanActivity.this);
-        imageView.setImageResource(R.drawable.can_bar);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(500,200));
-        linear_left.addView(imageView);
+        LinearLayout linearLayout = new LinearLayout(CanActivity.this);
+        linearLayout.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+        linear_left.addView(linearLayout);
 
-        ImageView imageView2 = new ImageView(CanActivity.this);
-        imageView2.setImageResource(R.drawable.can_bar);
-        imageView2.setLayoutParams(new LinearLayout.LayoutParams(500,200));
-        linear_right.addView(imageView2);
+        LinearLayout linearLayout2 = new LinearLayout(CanActivity.this);
+        linearLayout2.setLayoutParams(
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+        linear_right.addView(linearLayout2);
 
 
         int temp=0;
@@ -173,7 +175,11 @@ public class CanActivity extends Activity {
                 btn[i].setTextSize(11);
                 btn[i].setId(i);
 
-                btn[i].setBackground(getResources().getDrawable(R.drawable.can_seat));
+                LinearLayout.LayoutParams params =
+                        new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.topMargin = 5;
+                btn[i].setLayoutParams(params);
+                btn[i].setBackgroundColor(getResources().getColor(R.color.seat));
 
                 if (i % 2 == 0) {
                     linear_left.addView(btn[i]);
@@ -191,15 +197,15 @@ public class CanActivity extends Activity {
 
 
             // 구별 바
-            ImageView imageView3 = new ImageView(CanActivity.this);
-            imageView3.setImageResource(R.drawable.can_bar);
-            imageView3.setLayoutParams(new LinearLayout.LayoutParams(500,200));
-            linear_left.addView(imageView3);
+            LinearLayout linearLayout3 = new LinearLayout(CanActivity.this);
+            linearLayout3.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+            linear_left.addView(linearLayout3);
 
-            ImageView imageView4 = new ImageView(CanActivity.this);
-            imageView4.setImageResource(R.drawable.can_bar);
-            imageView4.setLayoutParams(new LinearLayout.LayoutParams(500,200));
-            linear_right.addView(imageView4);
+            LinearLayout linearLayout4 = new LinearLayout(CanActivity.this);
+            linearLayout4.setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
+            linear_right.addView(linearLayout4);
 
 
         }
@@ -214,17 +220,17 @@ public class CanActivity extends Activity {
             // 내가 앉은 자리가 있따면,
             if(GlobalClass.phoneID.equals(seatList.get(i).phoneID)){
                 GlobalClass.trainSeat = seatList.get(i).seat;
+                GlobalClass.seatflag = true;
 
                 if(GlobalClass.trainSeat == 1000){
-                    Toast.makeText(CanActivity.this, "현재 서있습니다.", Toast.LENGTH_SHORT).show();
+                    btnStand.setBackground(getResources().getDrawable(R.drawable.stand_me));
                 }else{
-                    btn[seatList.get(i).seat].setBackground(getResources().getDrawable(R.drawable.can_seat_me));
+                    btn[seatList.get(i).seat].setBackgroundColor(getResources().getColor(R.color.seat_me));
                 }
 
             }
 
-            if(GlobalClass.trainSeat == 1000){
-            }else{
+            if(GlobalClass.trainSeat != 1000){
                 btn[seatList.get(i).seat].setText(seatList.get(i).dst);
                 btn[seatList.get(i).seat].setTag(seatList.get(i).phoneID);
             }
@@ -300,7 +306,7 @@ public class CanActivity extends Activity {
 
             }
             // 만약 내가 앉은 자리라면,
-            else if(GlobalClass.phoneID.equals(String.valueOf(v.getTag()))){
+            else if(GlobalClass.phoneID.equals(String.valueOf(v.getTag())) || v.getId() == R.id.btnStand){
 
                 new AlertDialog.Builder(CanActivity.this).setTitle(String.valueOf(v.getId())+" 번 자리")
                         .setMessage("자리를 삭제하시겠습니까?").
@@ -460,10 +466,17 @@ public class CanActivity extends Activity {
                             // 일반적인 자리입력 성공
                             if(result.equals("normal")){
 
+
                                 // 내 자리 업데이트
-                                tempBtn.setBackground(getResources().getDrawable(R.drawable.can_seat_me));
-                                tempBtn.setText(GlobalClass.endS.getName());
-                                tempBtn.setTag(GlobalClass.phoneID);
+                                if(tempBtn.getId() == R.id.btnStand){
+                                    tempBtn.setBackground(getResources().getDrawable(R.drawable.stand_me));
+                                }else{
+                                    tempBtn.setBackgroundColor(getResources().getColor(R.color.seat_me));
+                                    tempBtn.setText(GlobalClass.endS.getName());
+                                    tempBtn.setTag(GlobalClass.phoneID);
+                                }
+
+
                                 GlobalClass.trainSeat = tempBtn.getId();
                                 GlobalClass.seatflag = true;
 
@@ -504,10 +517,16 @@ public class CanActivity extends Activity {
                             // 자리 이동 중
                             else if(result.equals("move")){
 
+
                                 // 내 자리 업데이트
-                                tempBtn.setBackground(getResources().getDrawable(R.drawable.can_seat_me));
-                                tempBtn.setText(GlobalClass.endS.getName());
-                                tempBtn.setTag(GlobalClass.phoneID);
+                                if(tempBtn.getId() == R.id.btnStand){
+                                    tempBtn.setBackground(getResources().getDrawable(R.drawable.stand_me));
+                                }else{
+                                    tempBtn.setBackgroundColor(getResources().getColor(R.color.seat_me));
+                                    tempBtn.setText(GlobalClass.endS.getName());
+                                    tempBtn.setTag(GlobalClass.phoneID);
+                                }
+
                                 GlobalClass.trainSeat = tempBtn.getId();
                                 GlobalClass.seatflag = true;
 
@@ -518,8 +537,10 @@ public class CanActivity extends Activity {
                                     // 이전 자리의 번호
                                     int preSeat = (jsonObject.get("preSeat")).getAsInt();
 
-                                    if(preSeat != 1000){
-                                        btn[preSeat].setBackground(getResources().getDrawable(R.drawable.can_seat));
+                                    if(preSeat == 1000){
+                                        btnStand.setBackground(getResources().getDrawable(R.drawable.stand));
+                                    }else{
+                                        btn[preSeat].setBackgroundColor(getResources().getColor(R.color.seat));
                                         btn[preSeat].setText("");
                                         btn[preSeat].setTag(null);
                                     }
@@ -593,7 +614,6 @@ public class CanActivity extends Activity {
         dialog.setCancelable(false);
         dialog.show();
 
-
         final JsonObject info = new JsonObject();
         info.addProperty("phoneID", GlobalClass.phoneID);
 
@@ -614,9 +634,14 @@ public class CanActivity extends Activity {
 
                             if (result.equals("success")) {
 
-                                tempBtn.setText("");
-                                tempBtn.setTag(null);
-                                tempBtn.setBackground(getResources().getDrawable(R.drawable.can_seat));
+                                if(tempBtn.getId() == R.id.btnStand){
+                                    tempBtn.setBackground(getResources().getDrawable(R.drawable.stand));
+                                }else{
+                                    tempBtn.setText("");
+                                    tempBtn.setTag(null);
+                                    tempBtn.setBackgroundColor(getResources().getColor(R.color.seat));
+                                }
+
                                 GlobalClass.trainSeat = -1;
                                 GlobalClass.seatflag = false;
 

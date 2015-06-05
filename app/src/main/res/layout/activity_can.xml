@@ -6,39 +6,62 @@
 
 
     <ScrollView
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/horizontalScrollView" >
 
         <LinearLayout
-            android:background="@drawable/can_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:background="#ff2f2f2f">
+
+        <LinearLayout
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#ffffff">
+
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="left"
-                android:id="@+id/linearLayout_left">
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="left"
+                    android:id="@+id/linearLayout_left">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="right"
+                    android:id="@+id/linearLayout_right">
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right"
-                android:id="@+id/linearLayout_right">
-
-            </LinearLayout>
-
 
         </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
     </ScrollView>>
 
 
@@ -59,23 +82,19 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/txt_trainXY"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="서있음"
-        android:id="@+id/btnStand"
-        android:tag="1000"
-        android:layout_above="@+id/txt_trainXY"
-        android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@drawable/stand"
+            android:id="@+id/btnStand"
+            android:tag="1000"
+            />
+
 
 
     <ImageButton
@@ -101,4 +120,18 @@
         android:id="@+id/btnChat"
         android:layout_toLeftOf="@id/btnAlarm"
         android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:textColor="#ffffe500"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textSize="50dp"
+        android:text="2"
+        android:id="@+id/txt_trainXY"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

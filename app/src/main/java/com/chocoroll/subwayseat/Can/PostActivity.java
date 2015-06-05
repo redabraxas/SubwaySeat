@@ -36,7 +36,7 @@ public class PostActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.activity_post);
 
         // 큐엔에이 작성구문
         TextView btnQna = (TextView)findViewById(R.id.btnReview);

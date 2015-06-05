@@ -171,21 +171,23 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="확인"
-                    android:id="@+id/btnOK"
-                    android:textColor="#6c6c6c"
+                    android:text="이전기록"
                     android:background="@null"
+                    android:textColor="#6c6c6c"
+                    android:id="@+id/btnLast"
                     android:onClick="btnClick"/>
 
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="이전기록"
-                    android:background="@null"
+                    android:text="확인"
+                    android:id="@+id/btnOK"
                     android:textColor="#6c6c6c"
-                    android:id="@+id/btnLast"
+                    android:background="@null"
                     android:onClick="btnClick"/>
+
+
 
             </LinearLayout>
         </LinearLayout>
