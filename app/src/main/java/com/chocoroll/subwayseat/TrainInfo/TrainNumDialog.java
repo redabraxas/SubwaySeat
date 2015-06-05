@@ -90,23 +90,6 @@ public class TrainNumDialog extends Dialog{
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-
-        // 오늘 날짜
-
-        int day;
-        Calendar cal= Calendar.getInstance ( );
-        int day_of_week = cal.get ( Calendar.DAY_OF_WEEK );
-        switch(day_of_week) {
-            case 1:
-                day = 3;   // 일요일 및 공휴일
-                break;
-            case 7:
-                day = 2;   // 토요일
-                break;
-            default:
-                day = 1;   // 평일
-        }
-
         // 현재 실시간 열차 도착 정보를 알아온다.
         getTrainInfoTask = new GetTrainInfoTask(station.getCode(), station.getLine());
         getTrainInfoTask.execute((Void) null);
@@ -124,7 +107,7 @@ public class TrainNumDialog extends Dialog{
         private final String urlPath;
 
         GetTrainInfoTask(String stationCode, String lineCode) {
-            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=1002000212&subwayId=1002";
+            urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100"+lineCode+"000"+stationCode+"&subwayId=100+"+lineCode;
             // urlPath="http://openapi.seoul.go.kr:8088/sample/json/SearchArrivalInfoByFRCodeService/1/2/"+stationCode+"/"+direction+"/"+day+"/";
 
             //urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=+"+lineCode+"000212&subwayId=1002";

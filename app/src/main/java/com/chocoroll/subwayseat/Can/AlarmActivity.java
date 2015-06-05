@@ -30,7 +30,7 @@ import java.util.TimerTask;
 
 public class AlarmActivity extends Activity {
     ImageView imgV;
-    TextView stationTv, rest, restTime, arriveTime;
+    TextView alarmStationTv, rest, restTime, arriveTime;
     static int m_alarmType=0;
     int hour, min;
 
@@ -39,8 +39,11 @@ public class AlarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        TextView stationTv = (TextView)findViewById(R.id.arrStation);
+        stationTv.setText("GlobalClass.endS.getName()");
+
         imgV = (ImageView)findViewById(R.id.bell);
-        stationTv = (TextView)findViewById(R.id.alarmStation);
+        alarmStationTv = (TextView)findViewById(R.id.alarmStation);
         rest = (TextView)findViewById(R.id.rest);
         restTime = (TextView)findViewById(R.id.restTime);
 
@@ -51,7 +54,7 @@ public class AlarmActivity extends Activity {
             @Override
             public void onClick(View v) {
                 imgV.setImageResource(R.drawable.bell);
-                stationTv.setTextColor(Color.RED);
+                alarmStationTv.setTextColor(Color.RED);
                 startService(new Intent("com.chocoroll.subwayseat.Can"));
             }
         });
@@ -61,7 +64,7 @@ public class AlarmActivity extends Activity {
             @Override
             public void onClick(View v) {
                 imgV.setImageResource(R.drawable.bell2);
-                stationTv.setTextColor(Color.BLACK);
+                alarmStationTv.setTextColor(Color.BLACK);
                 stopService(new Intent("com.chocoroll.subwayseat.Can"));
             }
         });
@@ -75,7 +78,7 @@ public class AlarmActivity extends Activity {
             }
         };
         Timer timer = new Timer();
-        timer.schedule(timerTask, 0, 6000); // 0초후 실행, 1분마다 반복실행
+        timer.schedule(timerTask, 0, 60000); // 0초후 실행, 1분마다 반복실행
 
     }
 

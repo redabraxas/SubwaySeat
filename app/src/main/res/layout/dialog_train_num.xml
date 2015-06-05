@@ -13,6 +13,7 @@
             android:padding="10dp"
             android:textStyle="bold"
             android:textSize="20dp"
+            android:textColor="#6c6c6c"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="실시간 열차 목록" />
