@@ -1,10 +1,7 @@
 package com.chocoroll.subwayseat;
 
 import android.app.Application;
-import android.content.Context;
-import android.telephony.TelephonyManager;
 
-import com.chocoroll.subwayseat.Model.Seat;
 import com.chocoroll.subwayseat.Model.Station;
 
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class GlobalClass extends Application {
     public static boolean seatflag = false;     // 자리 입력 했는지 안했는지
 
     // 호선 리스트
-    public static ArrayList<Station> stationList;
+    public static ArrayList<Station> stationList = new ArrayList<Station>();
 
 
     @Override

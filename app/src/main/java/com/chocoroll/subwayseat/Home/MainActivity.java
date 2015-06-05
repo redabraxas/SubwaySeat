@@ -203,18 +203,25 @@ public class MainActivity extends Activity {
 
                     if(line.equals("1")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList1);
+                        GlobalClass.stationList.addAll(stationList1);
                     }else if(line.equals("2")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList2);
+                        GlobalClass.stationList.addAll(stationList2);
                     }else if(line.equals("3")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList3);
+                        GlobalClass.stationList.addAll(stationList3);
                     }else if(line.equals("4")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList4);
+                        GlobalClass.stationList.addAll(stationList4);
                     }else if(line.equals("5")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList5);
+                        GlobalClass.stationList.addAll(stationList5);
                     }else if(line.equals("6")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList6);
+                        GlobalClass.stationList.addAll(stationList6);
                     }else if(line.equals("7")){
                         mSubAdatper = new StationAdatper(mContext, R.layout.model_station, stationList7);
+                        GlobalClass.stationList.addAll(stationList7);
                     }
 
                     listViewSearch.setAdapter(mSubAdatper);
@@ -280,27 +287,19 @@ public class MainActivity extends Activity {
                 stationList.add(new Station(name, code, line, posx, posy));
                 if(line.equals("1")){
                     stationList1.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList1);
                 }else if(line.equals("2")){
                     stationList2.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList2);
                 }else if(line.equals("3")){
                     stationList3.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList3);
                 }else if(line.equals("4")){
                     stationList4.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList4);
                 }else if(line.equals("5")){
                     stationList5.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList5);
                 }else if(line.equals("6")){
                     stationList6.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList6);
                 }else if(line.equals("7")){
                     stationList7.add(new Station(name, code, line, posx, posy));
-                    GlobalClass.stationList.addAll(stationList7);
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
