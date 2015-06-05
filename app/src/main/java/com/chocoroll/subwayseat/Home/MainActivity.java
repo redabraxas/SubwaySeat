@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.chocoroll.subwayseat.Adapter.StationAdatper;
-import com.chocoroll.subwayseat.Can.AlarmActivity;
 import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.Model.Station;
 import com.chocoroll.subwayseat.R;
@@ -186,9 +184,7 @@ public class MainActivity extends Activity {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                 }
                             }).create().show();
-
                 }
-
                 break;
             case R.id.btnLast:
                 break;

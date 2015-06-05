@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\classes-f5b5d7cf79a17b5d191af98616228875c1df6fde.jar" />
-    </item>
-    <item
-        jar="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\classes-6be8839a53b4f7e1a8f08a420957c6d5b4fc50af.jar" />
-    </item>
-    <item
-        jar="C:\Users\RA\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-780e9b43709476b21edba9cea619530475884f7c.jar" />
-    </item>
-    <item
-        jar="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\libs\gson-2.3.1.jar"
+        jar="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\libs\gson-2.3.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\gson-2.3.1-be3b0679e0b233c29064030b10852bd2cd10c966.jar" />
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\gson-2.3.1-1279e74105d6210ccee066c8b7260d46cabf36a6.jar" />
     </item>
     <item
-        jar="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\libs\retrofit-1.9.0.jar"
+        jar="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\classes-0517c4de93079a0c14f6c2849bd5ed785c8d0606.jar" />
+    </item>
+    <item
+        jar="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\classes-e06e1547c13e728f748190b353e7ddeb0bbb4c51.jar" />
+    </item>
+    <item
+        jar="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\libs\retrofit-1.9.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-623022e44de70ea07d27e6143a7fc2d35e00009c.jar" />
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\retrofit-1.9.0-7d30f2ef17807bac5a8feb2ea45ac45e2ebf43d7.jar" />
     </item>
     <item
-        jar="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\libs\internal_impl-22.1.1.jar"
+        jar="C:\Users\Administrator\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-5a0eb58dd284528707685bedd936fc5a6795fbd2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\libs\internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="H:\내문서\AndroidStudioProjects\Project\SubwaySeat\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-bac56a5c729b379beb76c38ac467dd3ab723f629.jar" />
+        <dex dex="C:\Users\Administrator\Desktop\AndroidProject\Group\SubwaySeat\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-37b40f3e0dfdf0b3fe9aa8da81275447e867e4ed.jar" />
     </item>
 
 </items>
