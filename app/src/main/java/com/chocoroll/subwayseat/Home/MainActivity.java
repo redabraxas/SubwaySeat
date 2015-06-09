@@ -157,6 +157,16 @@ public class MainActivity extends Activity {
                 editTextSearch.setText("");
                 GlobalClass.startS = station;
 
+                // 도착역은 저장해놓는다.
+                SharedPreferences setting = getSharedPreferences("station", MODE_PRIVATE);
+                SharedPreferences.Editor editor = setting.edit();
+
+                editor.putString("nameS", station.getName());
+                editor.putString("codeS", station.getCode());
+                editor.putString("lineS", station.getLine());
+                editor.putFloat("mapxS", (float) station.getPosx());
+                editor.putFloat("mpayS", (float) station.getPosy());
+                editor.commit();
 
             }else{
                 Station station = (Station)mSubAdapter.getItem(arg2);
@@ -168,11 +178,11 @@ public class MainActivity extends Activity {
                 SharedPreferences setting = getSharedPreferences("station", MODE_PRIVATE);
                 SharedPreferences.Editor editor = setting.edit();
 
-                editor.putString("name", station.getName());
-                editor.putString("code", station.getCode());
-                editor.putString("line", station.getLine());
-                editor.putFloat("mapx", (float) station.getPosx());
-                editor.putFloat("mpay", (float) station.getPosy());
+                editor.putString("nameE", station.getName());
+                editor.putString("codeE", station.getCode());
+                editor.putString("lineE", station.getLine());
+                editor.putFloat("mapxE", (float) station.getPosx());
+                editor.putFloat("mpayE", (float) station.getPosy());
                 editor.commit();
             }
 
@@ -354,12 +364,19 @@ public class MainActivity extends Activity {
                                 GlobalClass.trainSeat = (jsonObject.get("trainSeat")).getAsInt();
 
                                 SharedPreferences setting = getSharedPreferences("station", MODE_PRIVATE);
-                                String name = setting.getString("name", "");
-                                String code = setting.getString("code", "");
-                                String line = setting.getString("line", "");
-                                double mapx = setting.getFloat("mapx", 0);
-                                double mapy = setting.getFloat("mpay", 0);
+                                String name = setting.getString("nameE", "");
+                                String code = setting.getString("codeE", "");
+                                String line = setting.getString("lineE", "");
+                                double mapx = setting.getFloat("mapxE", 0);
+                                double mapy = setting.getFloat("mpayE", 0);
                                 GlobalClass.endS = new Station(name, code, line, mapx, mapy);
+
+                                String name1 = setting.getString("nameS", "");
+                                String code1 = setting.getString("codeS", "");
+                                String line1 = setting.getString("lineS", "");
+                                double mapx1 = setting.getFloat("mapxS", 0);
+                                double mapy1 = setting.getFloat("mpayS", 0);
+                                GlobalClass.startS = new Station(name1, code1, line1, mapx1, mapy1);
 
                                 Intent intent = new Intent(MainActivity.this, CanActivity.class);
                                 startActivity(intent);

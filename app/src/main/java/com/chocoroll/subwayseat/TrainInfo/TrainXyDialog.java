@@ -82,8 +82,8 @@ public class TrainXyDialog  extends Dialog {
                 LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
                 final View layout = inflate.inflate(R.layout.dialog_sure, null);
 
-                ((TextView) layout.findViewById(R.id.can)).setText(GlobalClass.startS.getName());
-                ((TextView) layout.findViewById(R.id.can)).setText(GlobalClass.endS.getName());
+                ((TextView) layout.findViewById(R.id.startS)).setText(GlobalClass.startS.getName());
+                ((TextView) layout.findViewById(R.id.endS)).setText(GlobalClass.endS.getName());
                 ((TextView) layout.findViewById(R.id.can)).setText(String.valueOf(GlobalClass.trainXY));
 
 
