@@ -1,20 +1,33 @@
 package com.chocoroll.subwayseat.Can;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.Service;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.chocoroll.subwayseat.GlobalClass;
 import com.chocoroll.subwayseat.R;
+import com.chocoroll.subwayseat.Retrofit.Retrofit;
+import com.google.gson.JsonObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ServiceClass extends Service {
     private MediaPlayer mPlayer = null;
@@ -75,14 +88,18 @@ public class ServiceClass extends Service {
         Notification.Builder builder = new Notification.Builder(getApplicationContext());
 
         // builder setting
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo));
         builder.setTicker("알람");
-        builder.setContentTitle("알람");
-        builder.setContentText("일어나세요!!!");
+        builder.setContentTitle("하차역 알람");
+        builder.setContentText("역에 도착했습니다. 일어나세요.");
         if((AlarmActivity.m_alarmType == 1) || (AlarmActivity.m_alarmType == 2))
             builder.setVibrate(new long[]{0,1000});
         builder.setAutoCancel(true);
+
+        // 자리삭제
+        delSeat();
+
 
         //PandingIntent 생성 및 빌더에 setting
         Intent i = new Intent(getApplicationContext(), AlarmActivity.class);
@@ -141,4 +158,48 @@ public class ServiceClass extends Service {
         timer.cancel();
         super.onDestroy();
     }
+
+
+
+    /**
+     *  자리삭제 AsyncTask
+     */
+
+    void delSeat(){
+
+        TelephonyManager telephony = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String phoneID = telephony.getDeviceId();    //device id
+        final JsonObject info = new JsonObject();
+        info.addProperty("phoneID", phoneID);
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint(Retrofit.ROOT)  //call your base url
+                            .build();
+                    Retrofit retrofit = restAdapter.create(Retrofit.class); //this is how retrofit create your api
+                    retrofit.delSeat(info, new Callback<String>() {
+
+                        @Override
+                        public void success(String result, Response response) {
+                        }
+
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+
+                        }
+                    });
+                }
+                catch (Throwable ex) {
+
+                }
+            }
+        }).start();
+
+
+    }
+
+
 }

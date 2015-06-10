@@ -105,8 +105,13 @@ public class CanActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(CanActivity.this, AlarmActivity.class);
-                startActivity(intent);
+                if(GlobalClass.seatflag){
+                    Intent intent = new Intent(CanActivity.this, AlarmActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(CanActivity.this, "먼저 자리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
         });
@@ -116,8 +121,14 @@ public class CanActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(CanActivity.this, PostActivity.class);
-                startActivity(intent);
+                if(GlobalClass.seatflag){
+                    Intent intent = new Intent(CanActivity.this, PostActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(CanActivity.this, "먼저 자리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
 
         });
@@ -522,6 +533,7 @@ public class CanActivity extends Activity {
                                 if(tempBtn.getId() == R.id.btnStand){
                                     tempBtn.setBackground(getResources().getDrawable(R.drawable.stand_me));
                                 }else{
+                                    btnStand.setBackground(getResources().getDrawable(R.drawable.stand));
                                     tempBtn.setBackgroundColor(getResources().getColor(R.color.seat_me));
                                     tempBtn.setText(GlobalClass.endS.getName());
                                     tempBtn.setTag(GlobalClass.phoneID);

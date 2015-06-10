@@ -175,11 +175,17 @@
         android:orientation="horizontal"
         android:gravity="center">
         <Button
+            android:padding="10dp"
+            android:background="@null"
+            android:textColor="#ff232569"
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="알람 설정" />
         <Button
+            android:padding="10dp"
+            android:background="@null"
+            android:textColor="#ffaf1730"
             android:id="@+id/btn_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
