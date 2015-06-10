@@ -1,8 +1,5 @@
 package com.chocoroll.subwayseat.Model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Created by RA on 2015-05-27.
  */
@@ -42,5 +39,13 @@ public class Station{
 
     public double getPosy() {
         return posy;
+    }
+
+    public void setPosx(double gpsX){
+        this.posx = gpsX;
+    }
+
+    public void setPosy(double gpsY){
+        this.posy = gpsY;
     }
 }

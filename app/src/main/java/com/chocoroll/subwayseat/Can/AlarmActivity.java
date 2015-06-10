@@ -53,10 +53,7 @@ public class AlarmActivity extends Activity {
         setContentView(R.layout.activity_alarm);
 
         TextView stationTv = (TextView)findViewById(R.id.arrStation);
-        stationTv.setText(GlobalClass.endS.getName());
-
-        imgV = (ImageView)findViewById(R.id.bell);
-        stationTv.setText(GlobalClass.endS.getName());
+        stationTv.setText(GlobalClass.endS.getName() + " 역");
 
         imgV = (ImageView)findViewById(R.id.bell);
         rest = (TextView)findViewById(R.id.rest);
@@ -87,23 +84,21 @@ public class AlarmActivity extends Activity {
             }
         });
 
+        // 실사간 열차 역에 따라서
+        // 도착역까지 남은 시간 및 남은 정거장 수 가져옴
+        String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=100"+GlobalClass.startS.getLine()+"000"+GlobalClass.startS.getCode()+"&estatn_id=100"+GlobalClass.endS.getLine()+"000"+GlobalClass.endS.getCode();
+        new Load_Rest_Time().execute(url);
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                // 도착역까지 남은 시간 및 남은 정거장 수 가져옴
-                String url = "http://bus.go.kr/getXml3.jsp?sstatn_id=100"+GlobalClass.startS.getLine()+"000"+GlobalClass.startS.getCode()+"&estatn_id=100"+GlobalClass.endS.getLine()+"000"+GlobalClass.endS.getCode();
-                Log.d("boha3", url);
-                new Load_Rest_Time().execute(url);
-
                 // 현재 실시간 열차 도착 정보를 알아온다.
                 getTrainInfoTask = new GetTrainInfoTask(GlobalClass.endS.getCode(), GlobalClass.endS.getLine());
                 getTrainInfoTask.execute((Void) null);
             }
         };
         Timer timer = new Timer();
-        timer.schedule(timerTask, 0, 60000); // 0초후 실행, 1분마다 반복실행
-
+        timer.schedule(timerTask, 0, 10000); // 0초후 실행, 1분마다 반복실행
     }
 
     private class Load_Rest_Time extends AsyncTask<String, Void, String>
@@ -149,7 +144,6 @@ public class AlarmActivity extends Activity {
                 boolean bSet = false;
                 String tag = null;
 
-
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_DOCUMENT) {
                         ;
@@ -178,13 +172,21 @@ public class AlarmActivity extends Activity {
             catch (Exception e) {
                 Log.e("Exception", e.getMessage());
             }
-            rest.setText(tm);
-            restTime.setText(time+"분");
+            rest.setText(tm);             // 남은 정거장 수
+            restTime.setText(time+"분"); // 예상 소요 시간
 
+            // 현재 시간 가져오기
             hour = Integer.valueOf(new SimpleDateFormat("HH").format(new Date(System.currentTimeMillis())));
             min = Integer.valueOf(new SimpleDateFormat("mm").format(new Date(System.currentTimeMillis())));
-            min += Integer.valueOf(time);
+            min += Integer.valueOf(time);   // 현재시간 + 예상 소요시간
 
+            if(min > 60)
+            {
+                hour ++;
+                min -= 60;
+            }
+
+            // 예상 도착시간
             arriveTime = (TextView)findViewById(R.id.arriveTime);
             arriveTime.setText(hour + " : " + min);
         }
@@ -210,8 +212,8 @@ public class AlarmActivity extends Activity {
         private final String urlPath;
 
         GetTrainInfoTask(String stationCode, String lineCode) {
+            // 도착역의 정보 받아오기
             urlPath = "http://m.bus.go.kr/mBus/subway/getArvlByInfo.bms?statnId=100" + lineCode + "000" + stationCode + "&subwayId=100" + lineCode;
-            Log.d("boha2", urlPath);
         }
 
         @Override
@@ -256,7 +258,6 @@ public class AlarmActivity extends Activity {
 
                 // 원격에서 읽어온 데이터로 JSON 객체 생성
                 JSONObject object = new JSONObject(str);
-
                 trainArray = new JSONArray(object.getString("resultList"));
                 return true;
 
@@ -286,7 +287,7 @@ public class AlarmActivity extends Activity {
         }
     }
 
-    void temp(JSONArray jsonArray) throws JSONException {
+    public void temp(JSONArray jsonArray) throws JSONException {
         getTrainInfoTask = null;
 
         if (jsonArray != null) {
@@ -294,22 +295,24 @@ public class AlarmActivity extends Activity {
 
                 JSONObject insideObject = jsonArray.getJSONObject(i);
 
-                String num = insideObject.getString("bTrainNo");  // 열차 번호
                 String time = insideObject.getString("arvlMsg2"); // 도착시간
-                String dst = insideObject.getString("trainLineNm"); // 행선지. 방면
-                Log.d("bohatime", time);
+                String num = insideObject.getString("bTrainNo");  // 열차 번호
+                double gpsX = insideObject.getDouble("gpsX");
+                double gpsY = insideObject.getDouble("gpsY");
 
-                String[] str = time.split("\\(");
-                time = str[0];
-                str = str[1].split("\\)");
+                GlobalClass.endS.setPosx(gpsX);
+                GlobalClass.endS.setPosy(gpsY);
 
+//                String[] str = time.split("\\(");
+//                time = str[0];
+//                String[] str2 = str[1].split("\\)");
 
                 // 비교
                 if(num.equals(GlobalClass.trainNum))
                 {
                     arriveInfo.setText("도착역 근처 입니다.\n");
-                    arriveInfo.append(time + " 입니다.\n");
-                    arriveInfo.append(str[0]);
+                    arriveInfo.append(time);
+                    //arriveInfo.append(str[0]);
                 }
             }
         }
