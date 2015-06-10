@@ -143,28 +143,56 @@ public class GpsInfo extends Service implements LocationListener {
      * 설정값으로 갈지 물어보는 alert 창
      * */
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        alertDialog.setTitle("GPS 사용유무셋팅");
-        alertDialog.setMessage("GPS 셋팅이 되지 않았을수도 있습니다.\n 설정창으로 가시겠습니까?");
+        //new myShowSettingsAlert();
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+//
+//        alertDialog.setTitle("GPS 사용유무셋팅");
+//        alertDialog.setMessage("GPS 셋팅이 되지 않았을수도 있습니다.\n 설정창으로 가시겠습니까?");
+//
+//                // OK 를 누르게 되면 설정창으로 이동합니다.
+//                alertDialog.setPositiveButton("Settings",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                                mContext.startActivity(intent);
+//                            }
+//                        });
+//        // Cancle 하면 종료 합니다.
+//        alertDialog.setNegativeButton("Cancel",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                });
+//        alertDialog.show();
+    }
 
-                // OK 를 누르게 되면 설정창으로 이동합니다.
-                alertDialog.setPositiveButton("Settings",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                mContext.startActivity(intent);
-                            }
-                        });
-        // Cancle 하면 종료 합니다.
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+    private class myShowSettingsAlert implements Runnable {
+        @Override
+        public void run(){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        alertDialog.show();
+            alertDialog.setTitle("GPS 사용유무셋팅");
+            alertDialog.setMessage("GPS 셋팅이 되지 않았을수도 있습니다.\n 설정창으로 가시겠습니까?");
+
+            // OK 를 누르게 되면 설정창으로 이동합니다.
+            alertDialog.setPositiveButton("Settings",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            mContext.startActivity(intent);
+                        }
+                    });
+            // Cancle 하면 종료 합니다.
+            alertDialog.setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            alertDialog.show();
+        }
     }
 
     @Override

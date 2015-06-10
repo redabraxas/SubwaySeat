@@ -46,6 +46,7 @@ public class AlarmActivity extends Activity {
     static int m_alarmType=0;
     int hour=0, min=0;
     GetTrainInfoTask getTrainInfoTask;
+    static Button btn_stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class AlarmActivity extends Activity {
             }
         });
 
-        Button btn_stop = (Button) findViewById(R.id.btn_stop);
+        btn_stop = (Button) findViewById(R.id.btn_stop);
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

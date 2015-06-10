@@ -1,19 +1,16 @@
 package com.chocoroll.subwayseat.Can;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.telephony.TelephonyManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.chocoroll.subwayseat.GlobalClass;
@@ -41,6 +38,14 @@ public class ServiceClass extends Service {
         return null;
     }
 
+    final Handler handler = new Handler()
+    {
+        public void handleMessage(Message msg)
+        {
+            AlarmActivity.btn_stop.callOnClick();
+        }
+    };
+
     @Override
     public void onStart(Intent intent, int startId) {
         mHandler = new Handler();
@@ -56,22 +61,36 @@ public class ServiceClass extends Service {
 
                 // GPS 사용유무 가져오기
                 double now_y = 0, now_x = 0;
+                boolean onGPS = true;
                 if (gps.isGetLocation()) {
                     now_y = gps.getLatitude();
                     now_x = gps.getLongitude();
                     //mHandler.post(new ToastRunnable("당신의 위치 - \nx: " + now_x + "\ny: " + now_y));
                 } else {
                     // GPS 를 사용할수 없으므로
-                    gps.showSettingsAlert();
+                    //gps.showSettingsAlert();
+                    mHandler.post(new ToastRunnable("GPS를 켜주세요"));
+                    onGPS = false;
+                    timer.cancel();
+                    new Thread()
+                    {
+                        public void run()
+                        {
+                            Message msg = handler.obtainMessage();
+                            handler.sendMessage(msg);
+                        }
+                    }.start();
                 }
 
-                // 비교
-                double endS_x = GlobalClass.endS.getPosx();     // 도착역
-                double endS_y = GlobalClass.endS.getPosy();
-                double dist = calDistance(now_x, now_y, endS_x, endS_y);
-                mHandler.post(new ToastRunnable("거리 : " + dist));
-                //if(dist < 800)     // 거리는 미터 단위로 나옴
-                    alarmStart();
+                if(onGPS == true) {
+                    // 비교
+                    double endS_x = GlobalClass.endS.getPosx();     // 도착역
+                    double endS_y = GlobalClass.endS.getPosy();
+                    double dist = calDistance(now_x, now_y, endS_x, endS_y);
+                    mHandler.post(new ToastRunnable("거리 : " + dist));
+                    if (dist < 800)     // 거리는 미터 단위로 나옴
+                        alarmStart();
+                }
             }
         };
         timer = new Timer();
@@ -100,6 +119,9 @@ public class ServiceClass extends Service {
         // 자리삭제
         delSeat();
 
+        // 타이머 삭제
+        timer.cancel();
+        timer.purge();
 
         //PandingIntent 생성 및 빌더에 setting
         Intent i = new Intent(getApplicationContext(), AlarmActivity.class);
