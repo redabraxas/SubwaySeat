@@ -52,6 +52,8 @@ public class AlarmActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
+        m_alarmType = 0;
+
         TextView stationTv = (TextView)findViewById(R.id.arrStation);
         stationTv.setText(GlobalClass.endS.getName() + " 역");
 
